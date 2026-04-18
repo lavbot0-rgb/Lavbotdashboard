@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lavbot Bullpen Dashboard</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#131a2e; --muted:#8ea0c9; --text:#eef4ff; --good:#49d17d; --bad:#ff6b6b; --accent:#7aa2ff; --border:#25304f; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#0b1020,#0f1630); color:var(--text); }
+    .wrap { max-width:1100px; margin:0 auto; padding:24px; }
+    h1 { margin:0 0 6px; font-size:32px; }
+    .sub { color:var(--muted); margin-bottom:24px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+    .panel { background:rgba(19,26,46,.92); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.2); }
+    .panel h2 { margin:0 0 12px; font-size:16px; color:#dbe7ff; }
+    .metric { font-size:28px; font-weight:700; }
+    .muted { color:var(--muted); font-size:13px; }
+    .good { color:var(--good); }
+    .bad { color:var(--bad); }
+    .full { grid-column:1 / -1; }
+    .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    ul { margin:0; padding-left:18px; }
+    li { margin:8px 0; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; background:#1d2743; color:#cfe0ff; font-size:12px; margin-left:8px; }
+    code { color:#c4d4ff; }
+    @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr;} .cols-2{grid-template-columns:1fr;} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Lavbot Bullpen Dashboard</h1>
+    <div class="sub">Paper-trading monitor for the Bullpen copy-trader experiment. Static V1 scaffold, next step is wiring live JSON data from the bot.</div>
+
+    <div class="grid">
+      <div class="panel"><h2>Cash</h2><div class="metric">$98.49</div><div class="muted">Latest paper cash</div></div>
+      <div class="panel"><h2>Ending Equity</h2><div class="metric">$98.49</div><div class="muted">Flat book right now</div></div>
+      <div class="panel"><h2>Total Return</h2><div class="metric bad">-1.51%</div><div class="muted">Current paper result</div></div>
+      <div class="panel"><h2>Win Rate</h2><div class="metric">50%</div><div class="muted">6 exits, mixed quality</div></div>
+
+      <div class="panel full">
+        <h2>Current Strategy Status <span class="pill">stricter copy-trader rules active</span></h2>
+        <ul>
+          <li>Requires <strong>3 wallets</strong>, <strong>2 buyers</strong>, persistence, positive momentum, sane price band.</li>
+          <li>Exits are now thesis-based first, price-based second.</li>
+          <li>Most current signals are being rejected as stale 2-wallet holds, which is expected and healthier than forced trades.</li>
+        </ul>
+      </div>
+
+      <div class="panel full cols-2">
+        <div class="panel" style="margin:0;">
+          <h2>Latest Meaningful Outcome</h2>
+          <ul>
+            <li><strong>Ducks vs. Predators</strong></li>
+            <li>Entry: <code>0.53</code></li>
+            <li>Exit: <code>0.999</code></li>
+            <li class="good">Paper PnL: <strong>+4.424528</strong></li>
+          </ul>
+        </div>
+        <div class="panel" style="margin:0;">
+          <h2>Latest Skip Logic</h2>
+          <ul>
+            <li>Not enough wallets</li>
+            <li>Not enough fresh buyers</li>
+            <li>No real buy momentum</li>
+            <li>Mixed or concentrated flow</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel full">
+        <h2>What gets added next</h2>
+        <ul>
+          <li>Live loading from <code>projects/bullpen-bot/state/*.json</code></li>
+          <li>Open/closed trade table</li>
+          <li>Equity curve</li>
+          <li>Signal list with wallet count, buyers, sellers, momentum</li>
+          <li>Recent skip reasons and exit reasons</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
