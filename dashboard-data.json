@@ -1,445 +1,332 @@
 {
   "title": "Lavbot Bullpen Dashboard",
-  "updated_at": "2026-04-18T19:27:45.480190+00:00",
+  "updated_at": "2026-04-18T20:19:01.649419+00:00",
   "summary": {
-    "cash": 98.490628,
+    "cash": 100.0,
     "open_positions": 0,
-    "closed_positions": 6,
-    "all_closed_positions": 11,
-    "realized_pnl": -1.509372,
-    "win_rate": 0.5,
-    "ending_equity": 98.490628,
-    "total_return": -0.015094,
-    "signals_now": 8
+    "closed_positions": 0,
+    "all_closed_positions": 0,
+    "realized_pnl": 0.0,
+    "win_rate": 0.0,
+    "ending_equity": 100.0,
+    "total_return": 0.0,
+    "signals_now": 8,
+    "actionable_signals_now": 0
   },
   "daily": {
-    "entries": 6,
-    "exits": 6,
-    "skips": 26,
-    "realized_pnl": -1.509372,
-    "wins": 3,
-    "losses": 3,
-    "win_rate": 0.5,
-    "avg_holding_hours": 0.000443,
+    "entries": 0,
+    "exits": 0,
+    "skips": 16,
+    "realized_pnl": 0.0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "avg_holding_hours": 0.0,
     "skip_reasons": {
-      "insufficient_persistence": 5,
-      "max_open_positions_reached": 1,
-      "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum": 13,
-      "wallet_count_below_threshold,no_buy_momentum,high_wallet_concentration": 1,
-      "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum,mixed_or_negative_flow": 1,
-      "wallet_count_below_threshold,high_wallet_concentration": 1,
-      "wallet_count_below_threshold,insufficient_persistence,high_wallet_concentration,price_out_of_range": 1,
-      "wallet_count_below_threshold,avg_score_below_threshold,insufficient_persistence": 1,
-      "wallet_count_below_threshold,buying_wallets_below_threshold": 2
+      "wallet_count_below_threshold,high_wallet_concentration": 2,
+      "price_out_of_range": 4,
+      "price_out_of_range,wallet_count_below_threshold": 9,
+      "wallet_count_below_threshold,insufficient_persistence": 1
     },
-    "exit_reasons": {
-      "exit_profit_take": 3,
-      "exit_stop_loss": 3
-    }
+    "exit_reasons": {}
   },
   "rolling": {
-    "total_entries": "6",
-    "total_exits": "6",
-    "total_realized_pnl": "-1.509372",
-    "real_priced_exits": "6",
-    "legacy_placeholder_exits": "5",
-    "avg_realized_pnl_per_trade": "-0.251562",
-    "median_realized_pnl_per_trade": "-0.279116",
-    "total_return": "-0.015094",
-    "wins": "3",
-    "losses": "3",
-    "overall_win_rate": "0.5",
-    "avg_holding_hours": "0.000386",
-    "median_holding_hours": "0.000443",
-    "cash": "98.490628",
+    "total_entries": "0",
+    "total_exits": "0",
+    "total_realized_pnl": "0.0",
+    "real_priced_exits": "0",
+    "legacy_placeholder_exits": "0",
+    "avg_realized_pnl_per_trade": "0.0",
+    "median_realized_pnl_per_trade": "0.0",
+    "total_return": "0.0",
+    "wins": "0",
+    "losses": "0",
+    "overall_win_rate": "0.0",
+    "avg_holding_hours": "0.0",
+    "median_holding_hours": "0.0",
+    "cash": "100.0",
     "open_positions": "0",
     "unrealized_pnl": "0",
-    "ending_equity": "98.490628",
-    "top_skip_reasons": "{\"insufficient_persistence\": 23, \"wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum\": 13, \"insufficient_persistence,price_out_of_range\": 2, \"wallet_count_below_threshold,buying_wallets_below_threshold\": 2, \"max_open_positions_reached\": 1}",
-    "top_exit_reasons": "{\"exit_profit_take\": 3, \"exit_stop_loss\": 3}",
-    "market_leaderboard": "[{\"market\": \"Ducks vs. Predators\", \"closed_trades\": 2, \"wins\": 2}, {\"market\": \"Will RB Leipzig win on 2026-04-18?\", \"closed_trades\": 1, \"wins\": 0}, {\"market\": \"Warriors vs. Suns: O/U 219.5\", \"closed_trades\": 1, \"wins\": 1}, {\"market\": \"New York Mets vs. Chicago Cubs: O/U 10.5\", \"closed_trades\": 1, \"wins\": 0}, {\"market\": \"Blues vs. Utah\", \"closed_trades\": 1, \"wins\": 0}]"
+    "ending_equity": "100.0",
+    "top_skip_reasons": "{\"price_out_of_range,wallet_count_below_threshold\": 9, \"price_out_of_range\": 4, \"wallet_count_below_threshold,high_wallet_concentration\": 2, \"wallet_count_below_threshold,insufficient_persistence\": 1}",
+    "top_exit_reasons": "{}",
+    "market_leaderboard": "[]"
   },
   "open_positions": [],
-  "closed_positions": [
-    {
-      "title": "Blues vs. Utah",
-      "side": "utah",
-      "entry_price": 0.527993,
-      "exit_price": 0.001,
-      "realized_pnl": -4.99053,
-      "exit_reason": "exit_stop_loss",
-      "opened_at": "2026-04-18T18:54:10.998008+00:00",
-      "closed_at": "2026-04-18T18:54:12.592859+00:00"
-    },
-    {
-      "title": "Ducks vs. Predators",
-      "side": "ducks",
-      "entry_price": 0.53,
-      "exit_price": 0.999,
-      "realized_pnl": 4.424528,
-      "exit_reason": "exit_profit_take",
-      "opened_at": "2026-04-18T18:54:10.997985+00:00",
-      "closed_at": "2026-04-18T18:54:12.592837+00:00"
-    },
-    {
-      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
-      "side": "under",
-      "entry_price": 0.55,
-      "exit_price": 0.001,
-      "realized_pnl": -4.990909,
-      "exit_reason": "exit_stop_loss",
-      "opened_at": "2026-04-18T18:54:10.997953+00:00",
-      "closed_at": "2026-04-18T18:54:12.592811+00:00"
-    },
-    {
-      "title": "Warriors vs. Suns: O/U 219.5",
-      "side": "under",
-      "entry_price": 0.52,
-      "exit_price": 0.999,
-      "realized_pnl": 4.60577,
-      "exit_reason": "exit_profit_take",
-      "opened_at": "2026-04-18T18:54:10.997906+00:00",
-      "closed_at": "2026-04-18T18:54:12.592777+00:00"
-    },
-    {
-      "title": "Will RB Leipzig win on 2026-04-18?",
-      "side": "no",
-      "entry_price": 0.58,
-      "exit_price": 0.002,
-      "realized_pnl": -4.982759,
-      "exit_reason": "exit_stop_loss",
-      "opened_at": "2026-04-18T18:54:10.997824+00:00",
-      "closed_at": "2026-04-18T18:54:12.592692+00:00"
-    },
-    {
-      "title": "Ducks vs. Predators",
-      "side": "ducks",
-      "entry_price": 0.53,
-      "exit_price": 0.999,
-      "realized_pnl": 4.424528,
-      "exit_reason": "exit_profit_take",
-      "opened_at": "2026-04-18T18:44:46.745742+00:00",
-      "closed_at": "2026-04-18T18:44:47.112468+00:00"
-    }
-  ],
+  "closed_positions": [],
   "signals": [
     {
-      "title": "Raptors vs. Cavaliers",
-      "side": "cavaliers",
+      "title": "Will Inter Miami CF win on 2026-04-18?",
+      "side": "yes",
       "wallet_count": 2,
       "buying_wallets": 2,
       "selling_wallets": 0,
       "avg_wallet_score": 9.655,
       "momentum_score": 19.31,
-      "price": 0.84,
-      "consecutive_count": 1
+      "price": 0.42,
+      "consecutive_count": 7,
+      "market_key": "mls-col-mia-2026-04-18-mia::yes"
     },
     {
-      "title": "Raptors vs. Cavaliers",
-      "side": "raptors",
+      "title": "Warriors vs. Suns: O/U 219.5",
+      "side": "under",
       "wallet_count": 2,
       "buying_wallets": 2,
       "selling_wallets": 0,
-      "avg_wallet_score": 6.3993,
-      "momentum_score": 12.7985,
-      "price": 0.23,
-      "consecutive_count": 1
+      "avg_wallet_score": 9.2416,
+      "momentum_score": 18.4833,
+      "price": 0.52,
+      "consecutive_count": 12,
+      "market_key": "nba-gsw-phx-2026-04-17-total-219pt5::under"
     },
     {
-      "title": "Hornets vs. Magic",
-      "side": "magic",
+      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
+      "side": "under",
       "wallet_count": 2,
-      "buying_wallets": 1,
+      "buying_wallets": 2,
       "selling_wallets": 0,
-      "avg_wallet_score": 7.43,
-      "momentum_score": 6.6525,
-      "price": 0.41,
-      "consecutive_count": 6
-    },
-    {
-      "title": "Magic vs. 76ers",
-      "side": "magic",
-      "wallet_count": 2,
-      "buying_wallets": 1,
-      "selling_wallets": 0,
-      "avg_wallet_score": 7.0218,
-      "momentum_score": 6.6525,
-      "price": 0.48,
-      "consecutive_count": 5
+      "avg_wallet_score": 9.2416,
+      "momentum_score": 18.4833,
+      "price": 0.55,
+      "consecutive_count": 12,
+      "market_key": "mlb-nym-chc-2026-04-17-total-10pt5::under"
     },
     {
       "title": "Ducks vs. Predators",
       "side": "ducks",
       "wallet_count": 2,
-      "buying_wallets": 0,
+      "buying_wallets": 2,
       "selling_wallets": 0,
       "avg_wallet_score": 8.1015,
-      "momentum_score": 0,
+      "momentum_score": 16.2031,
       "price": 0.53,
-      "consecutive_count": 6
-    },
-    {
-      "title": "Warriors vs. Suns: O/U 219.5",
-      "side": "under",
-      "wallet_count": 2,
-      "buying_wallets": 0,
-      "selling_wallets": 0,
-      "avg_wallet_score": 9.2416,
-      "momentum_score": 0,
-      "price": 0.52,
-      "consecutive_count": 5
-    },
-    {
-      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
-      "side": "under",
-      "wallet_count": 2,
-      "buying_wallets": 0,
-      "selling_wallets": 0,
-      "avg_wallet_score": 9.2416,
-      "momentum_score": 0,
-      "price": 0.55,
-      "consecutive_count": 5
+      "consecutive_count": 13,
+      "market_key": "nhl-ana-nsh-2026-04-16::ducks"
     },
     {
       "title": "Blues vs. Utah",
       "side": "utah",
       "wallet_count": 2,
-      "buying_wallets": 0,
+      "buying_wallets": 2,
       "selling_wallets": 0,
       "avg_wallet_score": 8.1015,
-      "momentum_score": 0,
-      "price": 0.527993,
-      "consecutive_count": 5
+      "momentum_score": 16.2031,
+      "price": 0.527992619383816,
+      "consecutive_count": 4,
+      "market_key": "nhl-stl-utah-2025-02-02::utah"
+    },
+    {
+      "title": "Hornets vs. Magic",
+      "side": "magic",
+      "wallet_count": 2,
+      "buying_wallets": 2,
+      "selling_wallets": 0,
+      "avg_wallet_score": 7.43,
+      "momentum_score": 14.8601,
+      "price": 0.41,
+      "consecutive_count": 4,
+      "market_key": "nba-cha-orl-2026-04-17-total-217pt5::magic"
+    },
+    {
+      "title": "Senators vs. Hurricanes",
+      "side": "hurricanes",
+      "wallet_count": 2,
+      "buying_wallets": 2,
+      "selling_wallets": 0,
+      "avg_wallet_score": 7.0708,
+      "momentum_score": 14.1415,
+      "price": 0.75,
+      "consecutive_count": 2,
+      "market_key": "nhl-ott-car-2026-04-18::hurricanes"
+    },
+    {
+      "title": "Magic vs. 76ers",
+      "side": "magic",
+      "wallet_count": 2,
+      "buying_wallets": 2,
+      "selling_wallets": 0,
+      "avg_wallet_score": 7.0218,
+      "momentum_score": 14.0436,
+      "price": 0.48,
+      "consecutive_count": 4,
+      "market_key": "magic-vs-76ers::magic"
     }
   ],
+  "actionable_signals": [],
   "recent_activity": [
     {
-      "timestamp": "2026-04-18T19:28:25.018683+00:00",
+      "timestamp": "2026-04-18T20:19:39.292428+00:00",
       "type": "run_snapshot",
       "title": null,
       "reason": null,
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T19:28:24.943257+00:00",
-      "type": "skip",
-      "title": "Blues vs. Utah",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:28:24.943237+00:00",
-      "type": "skip",
-      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:28:24.943224+00:00",
-      "type": "skip",
-      "title": "Warriors vs. Suns: O/U 219.5",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:28:24.943210+00:00",
-      "type": "skip",
-      "title": "Ducks vs. Predators",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:28:24.943196+00:00",
+      "timestamp": "2026-04-18T20:19:39.216995+00:00",
       "type": "skip",
       "title": "Magic vs. 76ers",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T19:28:24.943179+00:00",
+      "timestamp": "2026-04-18T20:19:39.216981+00:00",
+      "type": "skip",
+      "title": "Senators vs. Hurricanes",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:19:39.216962+00:00",
       "type": "skip",
       "title": "Hornets vs. Magic",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T19:28:24.943153+00:00",
-      "type": "skip",
-      "title": "Raptors vs. Cavaliers",
-      "reason": "wallet_count_below_threshold,avg_score_below_threshold,insufficient_persistence",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:28:24.943103+00:00",
-      "type": "skip",
-      "title": "Raptors vs. Cavaliers",
-      "reason": "wallet_count_below_threshold,insufficient_persistence,high_wallet_concentration,price_out_of_range",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.385198+00:00",
-      "type": "run_snapshot",
-      "title": null,
-      "reason": null,
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.310359+00:00",
-      "type": "skip",
-      "title": "Warriors vs. Suns",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.310345+00:00",
+      "timestamp": "2026-04-18T20:19:39.216946+00:00",
       "type": "skip",
       "title": "Blues vs. Utah",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T19:02:12.310331+00:00",
-      "type": "skip",
-      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.310314+00:00",
-      "type": "skip",
-      "title": "Warriors vs. Suns: O/U 219.5",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "realized_pnl": null
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.310291+00:00",
+      "timestamp": "2026-04-18T20:19:39.216929+00:00",
       "type": "skip",
       "title": "Ducks vs. Predators",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T19:02:12.310241+00:00",
+      "timestamp": "2026-04-18T20:19:39.216910+00:00",
       "type": "skip",
-      "title": "Will RB Leipzig win on 2026-04-18?",
+      "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
+      "reason": "price_out_of_range",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:19:39.216882+00:00",
+      "type": "skip",
+      "title": "Warriors vs. Suns: O/U 219.5",
+      "reason": "price_out_of_range",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:19:39.216770+00:00",
+      "type": "skip",
+      "title": "Will Inter Miami CF win on 2026-04-18?",
       "reason": "wallet_count_below_threshold,high_wallet_concentration",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T18:59:29.611246+00:00",
+      "timestamp": "2026-04-18T20:17:00.190423+00:00",
       "type": "run_snapshot",
       "title": null,
       "reason": null,
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T18:59:29.534958+00:00",
+      "timestamp": "2026-04-18T20:17:00.114664+00:00",
       "type": "skip",
-      "title": "Warriors vs. Suns",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
+      "title": "Magic vs. 76ers",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T18:59:29.534943+00:00",
+      "timestamp": "2026-04-18T20:17:00.114647+00:00",
+      "type": "skip",
+      "title": "Senators vs. Hurricanes",
+      "reason": "wallet_count_below_threshold,insufficient_persistence",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:17:00.114616+00:00",
+      "type": "skip",
+      "title": "Hornets vs. Magic",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:17:00.114600+00:00",
       "type": "skip",
       "title": "Blues vs. Utah",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum,mixed_or_negative_flow",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
       "realized_pnl": null
     },
     {
-      "timestamp": "2026-04-18T18:59:29.534928+00:00",
+      "timestamp": "2026-04-18T20:17:00.114583+00:00",
+      "type": "skip",
+      "title": "Ducks vs. Predators",
+      "reason": "price_out_of_range,wallet_count_below_threshold",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:17:00.114562+00:00",
       "type": "skip",
       "title": "New York Mets vs. Chicago Cubs: O/U 10.5",
-      "reason": "wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
+      "reason": "price_out_of_range",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:17:00.114532+00:00",
+      "type": "skip",
+      "title": "Warriors vs. Suns: O/U 219.5",
+      "reason": "price_out_of_range",
+      "realized_pnl": null
+    },
+    {
+      "timestamp": "2026-04-18T20:17:00.114417+00:00",
+      "type": "skip",
+      "title": "Will Inter Miami CF win on 2026-04-18?",
+      "reason": "wallet_count_below_threshold,high_wallet_concentration",
       "realized_pnl": null
     }
   ],
   "equity_curve": [
     {
-      "timestamp": "2026-04-17T17:44:49.396781+00:00",
+      "timestamp": "2026-04-18T20:17:00.190423+00:00",
       "ending_equity": 100.0,
       "cash": 100.0
     },
     {
-      "timestamp": "2026-04-17T17:47:46.633783+00:00",
+      "timestamp": "2026-04-18T20:19:39.292428+00:00",
       "ending_equity": 100.0,
       "cash": 100.0
-    },
-    {
-      "timestamp": "2026-04-18T18:44:47.136701+00:00",
-      "ending_equity": 113.849056,
-      "cash": 104.424528
-    },
-    {
-      "timestamp": "2026-04-18T18:46:49.829753+00:00",
-      "ending_equity": 104.424528,
-      "cash": 104.424528
-    },
-    {
-      "timestamp": "2026-04-18T18:51:08.484019+00:00",
-      "ending_equity": 104.424528,
-      "cash": 104.424528
-    },
-    {
-      "timestamp": "2026-04-18T18:51:31.460045+00:00",
-      "ending_equity": 104.424528,
-      "cash": 104.424528
-    },
-    {
-      "timestamp": "2026-04-18T18:54:12.618432+00:00",
-      "ending_equity": 98.490628,
-      "cash": 98.490628
-    },
-    {
-      "timestamp": "2026-04-18T18:59:29.611246+00:00",
-      "ending_equity": 98.490628,
-      "cash": 98.490628
-    },
-    {
-      "timestamp": "2026-04-18T19:02:12.385198+00:00",
-      "ending_equity": 98.490628,
-      "cash": 98.490628
-    },
-    {
-      "timestamp": "2026-04-18T19:28:25.018683+00:00",
-      "ending_equity": 98.490628,
-      "cash": 98.490628
     }
   ],
   "meta": {
     "daily_summary": {
       "date": "2026-04-18",
-      "entries": "6",
-      "exits": "6",
-      "skips": "26",
-      "realized_pnl": "-1.509372",
-      "wins": "3",
-      "losses": "3",
-      "win_rate": "0.5",
-      "avg_holding_hours": "0.000443",
-      "cash": "98.490628",
+      "entries": "0",
+      "exits": "0",
+      "skips": "16",
+      "realized_pnl": "0.0",
+      "wins": "0",
+      "losses": "0",
+      "win_rate": "0.0",
+      "avg_holding_hours": "0.0",
+      "cash": "100.0",
       "open_positions": "0",
       "unrealized_pnl": "0",
-      "ending_equity": "98.490628",
-      "skip_reasons": "{\"insufficient_persistence\": 5, \"max_open_positions_reached\": 1, \"wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum\": 13, \"wallet_count_below_threshold,no_buy_momentum,high_wallet_concentration\": 1, \"wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum,mixed_or_negative_flow\": 1, \"wallet_count_below_threshold,high_wallet_concentration\": 1, \"wallet_count_below_threshold,insufficient_persistence,high_wallet_concentration,price_out_of_range\": 1, \"wallet_count_below_threshold,avg_score_below_threshold,insufficient_persistence\": 1, \"wallet_count_below_threshold,buying_wallets_below_threshold\": 2}",
-      "exit_reasons": "{\"exit_profit_take\": 3, \"exit_stop_loss\": 3}"
+      "ending_equity": "100.0",
+      "skip_reasons": "{\"wallet_count_below_threshold,high_wallet_concentration\": 2, \"price_out_of_range\": 4, \"price_out_of_range,wallet_count_below_threshold\": 9, \"wallet_count_below_threshold,insufficient_persistence\": 1}",
+      "exit_reasons": "{}"
     },
     "trader_summary": {
-      "timestamp": "2026-04-18T19:28:24.943083+00:00",
-      "cash": "98.490628",
+      "timestamp": "2026-04-18T20:19:39.216682+00:00",
+      "cash": "100.0",
       "open_positions": "0",
       "new_entries": "0",
       "new_skips": "8",
       "entries": "",
       "skips": "",
-      "- Warriors vs. Suns": "O/U 219.5 | wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum",
-      "- New York Mets vs. Chicago Cubs": "O/U 10.5 | wallet_count_below_threshold,buying_wallets_below_threshold,no_buy_momentum"
+      "- Warriors vs. Suns": "O/U 219.5 | price_out_of_range",
+      "- New York Mets vs. Chicago Cubs": "O/U 10.5 | price_out_of_range"
     },
     "exit_summary": {
-      "timestamp": "2026-04-18T19:28:24.993186+00:00",
+      "timestamp": "2026-04-18T20:19:39.268183+00:00",
       "closed_now": "0",
       "remaining_open": "0",
-      "cash": "98.490628"
+      "cash": "100.0"
     }
   }
 }

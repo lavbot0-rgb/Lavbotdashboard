@@ -228,7 +228,7 @@
     fetch('./dashboard-data.json')
       .then(r => r.json())
       .then(data => {
-        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.signals_now} signals • ${data.summary.open_positions} open`;
+        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.actionable_signals_now} actionable • ${data.summary.signals_now} observed • ${data.summary.open_positions} open`;
 
         document.getElementById('stickySummary').innerHTML = [
           ['Cash', money(data.summary.cash)],
@@ -243,13 +243,13 @@
           card('Win Rate', pct(data.summary.win_rate), `${data.summary.closed_positions} real closed trades`),
         ].join('');
 
-        document.getElementById('chartNote').textContent = `${data.summary.closed_positions} real priced exits shown, older placeholder exits hidden.`;
+        document.getElementById('chartNote').textContent = `${data.summary.actionable_signals_now} actionable signals right now. ${data.summary.closed_positions} real priced exits shown, older placeholder exits hidden.`;
 
         renderList(
           document.getElementById('signals'),
-          (data.signals || []).slice(0, 5),
+          (data.actionable_signals || []).slice(0, 5),
           s => `<div class="item"><div class="item-title">${s.title}<span class="pill">${s.side}</span></div><div class="item-meta">${s.wallet_count} wallets • ${s.buying_wallets} buyers • score ${s.avg_wallet_score} • price ${s.price}</div></div>`,
-          'No strong signals right now.'
+          'No entry-eligible signals right now.'
         );
 
         renderList(

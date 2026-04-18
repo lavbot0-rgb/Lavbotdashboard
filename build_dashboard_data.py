@@ -88,9 +88,11 @@ def main() -> int:
 
     closed_positions = real_priced_closed_positions[-20:][::-1]
 
-    signals = []
-    for sig in convergence.get('signals', [])[:12]:
-        signals.append({
+    observed_signals = []
+    actionable_signals = []
+    already_traded = {p.get('trade_id') for p in ledger.get('closed_positions', [])} | {p.get('trade_id') for p in ledger.get('open_positions', [])}
+    for sig in convergence.get('signals', [])[:20]:
+        item = {
             'title': sig.get('title'),
             'side': sig.get('side'),
             'wallet_count': sig.get('wallet_count'),
@@ -100,7 +102,17 @@ def main() -> int:
             'momentum_score': sig.get('momentum_score'),
             'price': sig.get('price'),
             'consecutive_count': sig.get('consecutive_count'),
-        })
+            'market_key': sig.get('market_key'),
+        }
+        observed_signals.append(item)
+        if (
+            (sig.get('wallet_count') or 0) >= 3 and
+            (sig.get('buying_wallets') or 0) >= 2 and
+            (sig.get('momentum_score') or 0) > 0 and
+            (sig.get('consecutive_count') or 0) >= 2 and
+            sig.get('market_key') not in already_traded
+        ):
+            actionable_signals.append(item)
 
     recent_activity = []
     for ev in events[-20:][::-1]:
@@ -134,12 +146,14 @@ def main() -> int:
             'ending_equity': float(daily_summary.get('ending_equity', ledger.get('cash', 0)) or 0),
             'total_return': float(rolling_summary.get('total_return', 0) or 0),
             'signals_now': convergence.get('signal_count', 0),
+            'actionable_signals_now': len(actionable_signals),
         },
         'daily': latest_metrics,
         'rolling': rolling_summary,
         'open_positions': open_positions,
         'closed_positions': closed_positions,
-        'signals': signals,
+        'signals': observed_signals,
+        'actionable_signals': actionable_signals,
         'recent_activity': recent_activity,
         'equity_curve': equity_curve,
         'meta': {
@@ -151,7 +165,7 @@ def main() -> int:
 
     DASH.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, indent=2) + '\n')
-    print(json.dumps({'path': str(OUT), 'signals': len(signals), 'open_positions': len(open_positions), 'closed_positions': len(closed_positions)}))
+    print(json.dumps({'path': str(OUT), 'observed_signals': len(observed_signals), 'actionable_signals': len(actionable_signals), 'open_positions': len(open_positions), 'closed_positions': len(closed_positions)}))
     return 0
 
 
