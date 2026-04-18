@@ -70,8 +70,9 @@ def main() -> int:
         })
 
     closed_positions = []
-    for pos in ledger.get('closed_positions', [])[-20:][::-1]:
-        closed_positions.append({
+    real_priced_closed_positions = []
+    for pos in ledger.get('closed_positions', []):
+        item = {
             'title': pos.get('title'),
             'side': pos.get('side'),
             'entry_price': pos.get('entry_price'),
@@ -80,7 +81,12 @@ def main() -> int:
             'exit_reason': pos.get('exit_reason'),
             'opened_at': pos.get('opened_at'),
             'closed_at': pos.get('closed_at'),
-        })
+        }
+        closed_positions.append(item)
+        if not (float(pos.get('realized_pnl', 0.0) or 0.0) == 0.0 and pos.get('exit_reason') == 'signal_disappeared'):
+            real_priced_closed_positions.append(item)
+
+    closed_positions = real_priced_closed_positions[-20:][::-1]
 
     signals = []
     for sig in convergence.get('signals', [])[:12]:
@@ -121,7 +127,8 @@ def main() -> int:
         'summary': {
             'cash': ledger.get('cash', 0),
             'open_positions': len(ledger.get('open_positions', [])),
-            'closed_positions': len(ledger.get('closed_positions', [])),
+            'closed_positions': len(real_priced_closed_positions),
+            'all_closed_positions': len(ledger.get('closed_positions', [])),
             'realized_pnl': latest_metrics.get('realized_pnl', 0),
             'win_rate': latest_metrics.get('win_rate', 0),
             'ending_equity': float(daily_summary.get('ending_equity', ledger.get('cash', 0)) or 0),

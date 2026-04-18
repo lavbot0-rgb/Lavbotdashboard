@@ -39,7 +39,27 @@
       margin: 0 auto;
       padding: calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
     }
-    .header { margin-bottom: 24px; }
+    .sticky-summary {
+      position: sticky;
+      top: 8px;
+      z-index: 10;
+      margin-bottom: 16px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.72);
+      border-radius: 18px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .sticky-summary { background: rgba(44,44,46,0.72); }
+    }
+    .sticky-label { font-size: 11px; color: var(--muted); }
+    .sticky-value { font-size: 15px; font-weight: 600; margin-top: 2px; }
+    .header { margin-bottom: 20px; }
     .title { margin: 0 0 6px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
     .subtitle { font-size: 15px; line-height: 1.45; color: var(--muted); }
     .section { margin-top: 24px; }
@@ -51,8 +71,8 @@
       border-radius: 22px;
       padding: 18px;
       box-shadow: var(--shadow);
-      border: 0;
       transition: transform 220ms ease-in-out;
+      border: 0;
     }
     .card:hover { transform: translateY(-1px); }
     .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
@@ -61,7 +81,9 @@
     .good { color: var(--green); }
     .bad { color: var(--red); }
     .warn { color: var(--orange); }
+    .chart-wrap { position: relative; }
     canvas { width: 100%; height: 220px; display: block; }
+    .chart-note { margin-top: 10px; font-size: 13px; color: var(--muted); }
     .list { display: grid; gap: 8px; }
     .item { padding: 12px 0; border-bottom: 1px solid var(--line); }
     .item:last-child { border-bottom: none; }
@@ -92,12 +114,14 @@
       .wrap { max-width: 1100px; padding: 24px; }
       .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
       .stack-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-      .desktop-only { display: block; }
+      .sticky-summary { display: none; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="sticky-summary" id="stickySummary"></div>
+
     <header class="header">
       <h1 class="title">Lavbot Bullpen Dashboard</h1>
       <div class="subtitle" id="subtitle">Loading dashboard...</div>
@@ -108,7 +132,10 @@
     <section class="section">
       <div class="card">
         <h2>Equity</h2>
-        <canvas id="equityChart" width="1200" height="260"></canvas>
+        <div class="chart-wrap">
+          <canvas id="equityChart" width="1200" height="260"></canvas>
+        </div>
+        <div class="chart-note" id="chartNote"></div>
       </div>
     </section>
 
@@ -168,15 +195,34 @@
       if (!points.length) return;
       const vals = points.map(p => Number(p.ending_equity || p.cash || 0));
       const min = Math.min(...vals), max = Math.max(...vals), range = Math.max(max - min, 1);
+      const gradient = ctx.createLinearGradient(0, 0, 0, h);
+      gradient.addColorStop(0, 'rgba(0,122,255,0.30)');
+      gradient.addColorStop(1, 'rgba(0,122,255,0.02)');
+
+      const pts = vals.map((v, i) => ({
+        x: 20 + ((w - 40) * (vals.length === 1 ? 0.5 : i / (vals.length - 1))),
+        y: h - 20 - ((v - min) / range) * (h - 40)
+      }));
+
+      ctx.beginPath();
+      pts.forEach((p, i) => { if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); });
+      ctx.lineTo(pts[pts.length - 1].x, h - 20);
+      ctx.lineTo(pts[0].x, h - 20);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
       ctx.beginPath();
       ctx.lineWidth = 4;
       ctx.strokeStyle = '#007aff';
-      vals.forEach((v, i) => {
-        const x = 20 + ((w - 40) * (vals.length === 1 ? 0.5 : i / (vals.length - 1)));
-        const y = h - 20 - ((v - min) / range) * (h - 40);
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
+      pts.forEach((p, i) => { if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); });
       ctx.stroke();
+
+      const last = pts[pts.length - 1];
+      ctx.beginPath();
+      ctx.fillStyle = '#007aff';
+      ctx.arc(last.x, last.y, 5, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     fetch('./dashboard-data.json')
@@ -184,12 +230,20 @@
       .then(data => {
         document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.signals_now} signals • ${data.summary.open_positions} open`;
 
+        document.getElementById('stickySummary').innerHTML = [
+          ['Cash', money(data.summary.cash)],
+          ['Equity', money(data.summary.ending_equity)],
+          ['PnL', money(data.summary.realized_pnl)],
+        ].map(([k,v]) => `<div><div class="sticky-label">${k}</div><div class="sticky-value">${v}</div></div>`).join('');
+
         document.getElementById('summary').innerHTML = [
           card('Cash', money(data.summary.cash)),
           card('Equity', money(data.summary.ending_equity)),
           card('Today PnL', money(data.summary.realized_pnl), pct(data.summary.total_return), cls(data.summary.total_return)),
-          card('Win Rate', pct(data.summary.win_rate), `${data.summary.closed_positions} closed trades`),
+          card('Win Rate', pct(data.summary.win_rate), `${data.summary.closed_positions} real closed trades`),
         ].join('');
+
+        document.getElementById('chartNote').textContent = `${data.summary.closed_positions} real priced exits shown, older placeholder exits hidden.`;
 
         renderList(
           document.getElementById('signals'),

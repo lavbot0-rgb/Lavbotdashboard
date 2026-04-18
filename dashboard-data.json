@@ -4,7 +4,8 @@
   "summary": {
     "cash": 98.490628,
     "open_positions": 0,
-    "closed_positions": 11,
+    "closed_positions": 6,
+    "all_closed_positions": 11,
     "realized_pnl": -1.509372,
     "win_rate": 0.5,
     "ending_equity": 98.490628,
@@ -119,56 +120,6 @@
       "exit_reason": "exit_profit_take",
       "opened_at": "2026-04-18T18:44:46.745742+00:00",
       "closed_at": "2026-04-18T18:44:47.112468+00:00"
-    },
-    {
-      "title": "Will WTI Crude Oil (WTI) hit (LOW) $80 in April?",
-      "side": "yes",
-      "entry_price": 0.89,
-      "exit_price": 0.89,
-      "realized_pnl": 0.0,
-      "exit_reason": "signal_disappeared",
-      "opened_at": "2026-04-17T17:28:05.656032+00:00",
-      "closed_at": "2026-04-17T17:34:32.115179+00:00"
-    },
-    {
-      "title": "Will WTI Crude Oil (WTI) hit (HIGH) $100 in April?",
-      "side": "yes",
-      "entry_price": 0.169558,
-      "exit_price": 0.169558,
-      "realized_pnl": 0.0,
-      "exit_reason": "signal_disappeared",
-      "opened_at": "2026-04-17T17:28:05.656020+00:00",
-      "closed_at": "2026-04-17T17:34:32.115177+00:00"
-    },
-    {
-      "title": "Warriors vs. Clippers",
-      "side": "warriors",
-      "entry_price": 0.34,
-      "exit_price": 0.34,
-      "realized_pnl": 0.0,
-      "exit_reason": "signal_disappeared",
-      "opened_at": "2026-04-17T17:27:46.718304+00:00",
-      "closed_at": "2026-04-17T17:34:32.115174+00:00"
-    },
-    {
-      "title": "Texas Rangers vs. Athletics: O/U 8.5",
-      "side": "under",
-      "entry_price": 0.53,
-      "exit_price": 0.53,
-      "realized_pnl": 0.0,
-      "exit_reason": "signal_disappeared",
-      "opened_at": "2026-04-17T17:27:46.718299+00:00",
-      "closed_at": "2026-04-17T17:34:32.115169+00:00"
-    },
-    {
-      "title": "Sharks vs. Blackhawks",
-      "side": "blackhawks",
-      "entry_price": 0.49,
-      "exit_price": 0.49,
-      "realized_pnl": 0.0,
-      "exit_reason": "signal_disappeared",
-      "opened_at": "2026-04-17T17:27:46.718289+00:00",
-      "closed_at": "2026-04-17T17:34:32.115153+00:00"
     }
   ],
   "signals": [
