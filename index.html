@@ -5,81 +5,290 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lavbot Bullpen Dashboard</title>
   <style>
-    :root { color-scheme: dark; --bg:#0b1020; --panel:#131a2e; --muted:#8ea0c9; --text:#eef4ff; --good:#49d17d; --bad:#ff6b6b; --accent:#7aa2ff; --border:#25304f; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#0b1020,#0f1630); color:var(--text); }
-    .wrap { max-width:1100px; margin:0 auto; padding:24px; }
-    h1 { margin:0 0 6px; font-size:32px; }
-    .sub { color:var(--muted); margin-bottom:24px; }
-    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
-    .panel { background:rgba(19,26,46,.92); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.2); }
-    .panel h2 { margin:0 0 12px; font-size:16px; color:#dbe7ff; }
-    .metric { font-size:28px; font-weight:700; }
-    .muted { color:var(--muted); font-size:13px; }
-    .good { color:var(--good); }
-    .bad { color:var(--bad); }
-    .full { grid-column:1 / -1; }
-    .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    ul { margin:0; padding-left:18px; }
-    li { margin:8px 0; }
-    .pill { display:inline-block; padding:4px 8px; border-radius:999px; background:#1d2743; color:#cfe0ff; font-size:12px; margin-left:8px; }
-    code { color:#c4d4ff; }
-    @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr;} .cols-2{grid-template-columns:1fr;} }
-    @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+    :root {
+      --bg: #f2f2f7;
+      --card: rgba(255,255,255,0.88);
+      --text: #111827;
+      --muted: #6b7280;
+      --border: rgba(255,255,255,0.4);
+      --shadow: 0 8px 30px rgba(17,24,39,0.08);
+      --accent: #007aff;
+      --green: #16a34a;
+      --red: #dc2626;
+      --orange: #f59e0b;
+      --line: rgba(17,24,39,0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1e;
+        --card: rgba(44,44,46,0.92);
+        --text: #f5f5f7;
+        --muted: #a1a1aa;
+        --border: rgba(255,255,255,0.04);
+        --shadow: 0 10px 30px rgba(0,0,0,0.25);
+        --line: rgba(255,255,255,0.08);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 24px; }
+    .header { margin-bottom: 28px; }
+    .title { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .subtitle { font-size: 15px; color: var(--muted); }
+    .section { margin-top: 28px; }
+    .section h2 { margin: 0 0 16px; font-size: 20px; font-weight: 600; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .widget-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 240ms ease-in-out, box-shadow 240ms ease-in-out;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .value { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+    .trend { margin-top: 8px; font-size: 13px; }
+    .good { color: var(--green); }
+    .bad { color: var(--red); }
+    .warn { color: var(--orange); }
+    .chart-card { padding: 20px; }
+    canvas { width: 100%; height: 280px; display: block; }
+    .table-card { overflow: hidden; }
+    .rows { display: grid; gap: 1px; background: transparent; }
+    .row {
+      display: grid;
+      grid-template-columns: 2.2fr repeat(4, 1fr);
+      gap: 12px;
+      padding: 14px 0;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+    .row:last-child { border-bottom: none; }
+    .row.header { color: var(--muted); font-size: 12px; padding-top: 0; }
+    .activity-list, .signal-list { display: grid; gap: 12px; }
+    .item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .item:last-child { border-bottom: none; }
+    .item-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .item-meta { font-size: 13px; color: var(--muted); }
+    .pill {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0,122,255,0.12);
+      color: var(--accent);
+      font-size: 12px;
+      vertical-align: middle;
+    }
+    .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
+    @media (max-width: 1100px) {
+      .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .widget-grid { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 2fr 1fr 1fr; }
+      .row span:nth-child(4), .row span:nth-child(5) { display:none; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 20px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .title { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Lavbot Bullpen Dashboard</h1>
-    <div class="sub">Paper-trading monitor for the Bullpen copy-trader experiment. Static V1 scaffold, next step is wiring live JSON data from the bot.</div>
+    <header class="header">
+      <h1 class="title">Lavbot Bullpen Dashboard</h1>
+      <div class="subtitle" id="subtitle">Loading latest paper-trading state...</div>
+    </header>
 
-    <div class="grid">
-      <div class="panel"><h2>Cash</h2><div class="metric">$98.49</div><div class="muted">Latest paper cash</div></div>
-      <div class="panel"><h2>Ending Equity</h2><div class="metric">$98.49</div><div class="muted">Flat book right now</div></div>
-      <div class="panel"><h2>Total Return</h2><div class="metric bad">-1.51%</div><div class="muted">Current paper result</div></div>
-      <div class="panel"><h2>Win Rate</h2><div class="metric">50%</div><div class="muted">6 exits, mixed quality</div></div>
+    <section class="summary-grid" id="summary"></section>
 
-      <div class="panel full">
-        <h2>Current Strategy Status <span class="pill">stricter copy-trader rules active</span></h2>
-        <ul>
-          <li>Requires <strong>3 wallets</strong>, <strong>2 buyers</strong>, persistence, positive momentum, sane price band.</li>
-          <li>Exits are now thesis-based first, price-based second.</li>
-          <li>Most current signals are being rejected as stale 2-wallet holds, which is expected and healthier than forced trades.</li>
-        </ul>
+    <section class="section">
+      <div class="card chart-card">
+        <h2>Equity Curve</h2>
+        <canvas id="equityChart" width="1200" height="320"></canvas>
       </div>
+    </section>
 
-      <div class="panel full cols-2">
-        <div class="panel" style="margin:0;">
-          <h2>Latest Meaningful Outcome</h2>
-          <ul>
-            <li><strong>Ducks vs. Predators</strong></li>
-            <li>Entry: <code>0.53</code></li>
-            <li>Exit: <code>0.999</code></li>
-            <li class="good">Paper PnL: <strong>+4.424528</strong></li>
-          </ul>
-        </div>
-        <div class="panel" style="margin:0;">
-          <h2>Latest Skip Logic</h2>
-          <ul>
-            <li>Not enough wallets</li>
-            <li>Not enough fresh buyers</li>
-            <li>No real buy momentum</li>
-            <li>Mixed or concentrated flow</li>
-          </ul>
-        </div>
+    <section class="section widget-grid">
+      <div class="card">
+        <h2>Current Candidate Signals</h2>
+        <div class="signal-list" id="signals"></div>
       </div>
+      <div class="card">
+        <h2>Recent Activity</h2>
+        <div class="activity-list" id="activity"></div>
+      </div>
+    </section>
 
-      <div class="panel full">
-        <h2>What gets added next</h2>
-        <ul>
-          <li>Live loading from <code>projects/bullpen-bot/state/*.json</code></li>
-          <li>Open/closed trade table</li>
-          <li>Equity curve</li>
-          <li>Signal list with wallet count, buyers, sellers, momentum</li>
-          <li>Recent skip reasons and exit reasons</li>
-        </ul>
+    <section class="section widget-grid">
+      <div class="card table-card">
+        <h2>Open Positions</h2>
+        <div class="rows" id="openPositions"></div>
       </div>
-    </div>
+      <div class="card table-card">
+        <h2>Recent Closed Trades</h2>
+        <div class="rows" id="closedPositions"></div>
+      </div>
+    </section>
   </div>
+
+  <script>
+    const fmtMoney = (n) => {
+      const num = Number(n || 0);
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(num);
+    };
+    const fmtPct = (n) => `${(Number(n || 0) * 100).toFixed(2)}%`;
+    const clsFor = (n) => Number(n || 0) > 0 ? 'good' : Number(n || 0) < 0 ? 'bad' : '';
+
+    function summaryCard(label, value, trend = '', trendClass = '') {
+      return `
+        <div class="card">
+          <div class="label">${label}</div>
+          <div class="value">${value}</div>
+          ${trend ? `<div class="trend ${trendClass}">${trend}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderTable(container, rows, headers, mapper) {
+      if (!rows.length) {
+        container.innerHTML = `<div class="empty">Nothing to show right now.</div>`;
+        return;
+      }
+      const header = `<div class="row header">${headers.map(h => `<span>${h}</span>`).join('')}</div>`;
+      const body = rows.map(r => `<div class="row">${mapper(r).map(v => `<span>${v}</span>`).join('')}</div>`).join('');
+      container.innerHTML = header + body;
+    }
+
+    function renderList(container, items, mapper, emptyText) {
+      if (!items.length) {
+        container.innerHTML = `<div class="empty">${emptyText}</div>`;
+        return;
+      }
+      container.innerHTML = items.map(mapper).join('');
+    }
+
+    function drawEquityCurve(points) {
+      const canvas = document.getElementById('equityChart');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(107,114,128,0.18)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 4; i++) {
+        const y = (height / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      if (!points.length) return;
+      const vals = points.map(p => Number(p.ending_equity || p.cash || 0));
+      const min = Math.min(...vals);
+      const max = Math.max(...vals);
+      const range = Math.max(max - min, 1);
+      ctx.beginPath();
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#007aff';
+      vals.forEach((v, i) => {
+        const x = (width - 40) * (vals.length === 1 ? 0.5 : i / (vals.length - 1)) + 20;
+        const y = height - 24 - ((v - min) / range) * (height - 48);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+
+    fetch('./dashboard-data.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • Cash ${fmtMoney(data.summary.cash)} • ${data.summary.signals_now} signals observed`;
+
+        document.getElementById('summary').innerHTML = [
+          summaryCard('Cash', fmtMoney(data.summary.cash)),
+          summaryCard('Ending Equity', fmtMoney(data.summary.ending_equity)),
+          summaryCard('Daily Realized PnL', fmtMoney(data.summary.realized_pnl), fmtPct(data.summary.total_return), clsFor(data.summary.total_return)),
+          summaryCard('Win Rate', fmtPct(data.summary.win_rate), `${data.summary.open_positions} open • ${data.summary.closed_positions} closed`),
+        ].join('');
+
+        renderList(
+          document.getElementById('signals'),
+          data.signals || [],
+          (s) => `
+            <div class="item">
+              <div class="item-title">${s.title}<span class="pill">${s.side}</span></div>
+              <div class="item-meta">Wallets ${s.wallet_count} • Buyers ${s.buying_wallets} • Sellers ${s.selling_wallets} • Score ${s.avg_wallet_score} • Momentum ${s.momentum_score} • Price ${s.price}</div>
+            </div>
+          `,
+          'No candidate signals right now.'
+        );
+
+        renderList(
+          document.getElementById('activity'),
+          data.recent_activity || [],
+          (a) => `
+            <div class="item">
+              <div class="item-title">${a.type || 'event'}${a.title ? ` • ${a.title}` : ''}</div>
+              <div class="item-meta">${a.timestamp || ''}${a.reason ? ` • ${a.reason}` : ''}${a.realized_pnl !== undefined && a.realized_pnl !== null ? ` • PnL ${fmtMoney(a.realized_pnl)}` : ''}</div>
+            </div>
+          `,
+          'No recent activity yet.'
+        );
+
+        renderTable(
+          document.getElementById('openPositions'),
+          data.open_positions || [],
+          ['Market', 'Side', 'Entry', 'PnL', 'Return'],
+          (p) => [
+            p.title,
+            p.side,
+            fmtMoney(p.entry_usd),
+            `<span class="${clsFor(p.unrealized_pnl)}">${fmtMoney(p.unrealized_pnl)}</span>`,
+            `<span class="${clsFor(p.return_pct)}">${fmtPct(p.return_pct)}</span>`
+          ]
+        );
+
+        renderTable(
+          document.getElementById('closedPositions'),
+          data.closed_positions || [],
+          ['Market', 'Side', 'Reason', 'PnL', 'Exit'],
+          (p) => [
+            p.title,
+            p.side,
+            p.exit_reason || '-',
+            `<span class="${clsFor(p.realized_pnl)}">${fmtMoney(p.realized_pnl)}</span>`,
+            p.exit_price ?? '-'
+          ]
+        );
+
+        drawEquityCurve(data.equity_curve || []);
+      })
+      .catch(err => {
+        document.getElementById('subtitle').textContent = `Dashboard data failed to load: ${err}`;
+      });
+  </script>
 </body>
 </html>
