@@ -7,26 +7,24 @@
   <style>
     :root {
       --bg: #f2f2f7;
-      --card: rgba(255,255,255,0.88);
+      --card: rgba(255,255,255,0.92);
       --text: #111827;
       --muted: #6b7280;
-      --border: rgba(255,255,255,0.4);
-      --shadow: 0 8px 30px rgba(17,24,39,0.08);
+      --line: rgba(17,24,39,0.08);
+      --shadow: 0 10px 28px rgba(15,23,42,0.07);
       --accent: #007aff;
       --green: #16a34a;
       --red: #dc2626;
       --orange: #f59e0b;
-      --line: rgba(17,24,39,0.08);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #1c1c1e;
-        --card: rgba(44,44,46,0.92);
+        --card: rgba(44,44,46,0.94);
         --text: #f5f5f7;
         --muted: #a1a1aa;
-        --border: rgba(255,255,255,0.04);
-        --shadow: 0 10px 30px rgba(0,0,0,0.25);
         --line: rgba(255,255,255,0.08);
+        --shadow: 0 10px 30px rgba(0,0,0,0.22);
       }
     }
     * { box-sizing: border-box; }
@@ -36,83 +34,66 @@
       background: var(--bg);
       color: var(--text);
     }
-    .wrap { max-width: 1280px; margin: 0 auto; padding: 24px; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
     .header { margin-bottom: 28px; }
-    .title { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .title { margin: 0 0 6px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
     .subtitle { font-size: 15px; color: var(--muted); }
     .section { margin-top: 28px; }
-    .section h2 { margin: 0 0 16px; font-size: 20px; font-weight: 600; }
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-    .widget-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
+    .section h2 { margin: 0 0 14px; font-size: 19px; font-weight: 600; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .card {
       background: var(--card);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border-radius: 22px;
       padding: 18px;
       box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: transform 240ms ease-in-out, box-shadow 240ms ease-in-out;
+      transition: transform 240ms ease-in-out;
     }
-    .card:hover { transform: translateY(-2px); }
+    .card:hover { transform: translateY(-1px); }
     .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
     .value { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
-    .trend { margin-top: 8px; font-size: 13px; }
+    .subvalue { margin-top: 8px; font-size: 13px; color: var(--muted); }
     .good { color: var(--green); }
     .bad { color: var(--red); }
     .warn { color: var(--orange); }
-    .chart-card { padding: 20px; }
-    canvas { width: 100%; height: 280px; display: block; }
-    .table-card { overflow: hidden; }
-    .rows { display: grid; gap: 1px; background: transparent; }
-    .row {
-      display: grid;
-      grid-template-columns: 2.2fr repeat(4, 1fr);
-      gap: 12px;
-      padding: 14px 0;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
-      font-size: 14px;
-    }
-    .row:last-child { border-bottom: none; }
-    .row.header { color: var(--muted); font-size: 12px; padding-top: 0; }
-    .activity-list, .signal-list { display: grid; gap: 12px; }
-    .item {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-    }
+    canvas { width: 100%; height: 240px; display: block; }
+    .list { display: grid; gap: 10px; }
+    .item { padding: 12px 0; border-bottom: 1px solid var(--line); }
     .item:last-child { border-bottom: none; }
     .item-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
     .item-meta { font-size: 13px; color: var(--muted); }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th {
+      text-align: left;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 0 10px;
+    }
+    .table td {
+      font-size: 14px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .empty { font-size: 14px; color: var(--muted); padding: 6px 0; }
     .pill {
       display: inline-block;
-      margin-left: 8px;
       padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(0,122,255,0.12);
+      background: rgba(0,122,255,0.10);
       color: var(--accent);
       font-size: 12px;
-      vertical-align: middle;
+      margin-left: 8px;
     }
-    .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
-    @media (max-width: 1100px) {
-      .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .widget-grid { grid-template-columns: 1fr; }
-      .row { grid-template-columns: 2fr 1fr 1fr; }
-      .row span:nth-child(4), .row span:nth-child(5) { display:none; }
+    @media (max-width: 900px) {
+      .summary-grid, .grid-2 { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
       .wrap { padding: 20px; }
-      .summary-grid { grid-template-columns: 1fr; }
+      .summary-grid, .grid-2 { grid-template-columns: 1fr; }
       .title { font-size: 28px; }
+      .value { font-size: 26px; }
     }
   </style>
 </head>
@@ -120,103 +101,85 @@
   <div class="wrap">
     <header class="header">
       <h1 class="title">Lavbot Bullpen Dashboard</h1>
-      <div class="subtitle" id="subtitle">Loading latest paper-trading state...</div>
+      <div class="subtitle" id="subtitle">Loading dashboard...</div>
     </header>
 
     <section class="summary-grid" id="summary"></section>
 
     <section class="section">
-      <div class="card chart-card">
-        <h2>Equity Curve</h2>
-        <canvas id="equityChart" width="1200" height="320"></canvas>
+      <div class="card">
+        <h2>Equity</h2>
+        <canvas id="equityChart" width="1200" height="280"></canvas>
       </div>
     </section>
 
-    <section class="section widget-grid">
+    <section class="section grid-2">
       <div class="card">
-        <h2>Current Candidate Signals</h2>
-        <div class="signal-list" id="signals"></div>
+        <h2>Top Signals</h2>
+        <div class="list" id="signals"></div>
       </div>
       <div class="card">
         <h2>Recent Activity</h2>
-        <div class="activity-list" id="activity"></div>
+        <div class="list" id="activity"></div>
       </div>
     </section>
 
-    <section class="section widget-grid">
-      <div class="card table-card">
+    <section class="section grid-2">
+      <div class="card">
         <h2>Open Positions</h2>
-        <div class="rows" id="openPositions"></div>
+        <div id="openPositions"></div>
       </div>
-      <div class="card table-card">
+      <div class="card">
         <h2>Recent Closed Trades</h2>
-        <div class="rows" id="closedPositions"></div>
+        <div id="closedPositions"></div>
       </div>
     </section>
   </div>
 
   <script>
-    const fmtMoney = (n) => {
-      const num = Number(n || 0);
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(num);
-    };
-    const fmtPct = (n) => `${(Number(n || 0) * 100).toFixed(2)}%`;
-    const clsFor = (n) => Number(n || 0) > 0 ? 'good' : Number(n || 0) < 0 ? 'bad' : '';
+    const money = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(Number(n || 0));
+    const pct = (n) => `${(Number(n || 0) * 100).toFixed(2)}%`;
+    const cls = (n) => Number(n || 0) > 0 ? 'good' : Number(n || 0) < 0 ? 'bad' : '';
 
-    function summaryCard(label, value, trend = '', trendClass = '') {
-      return `
-        <div class="card">
-          <div class="label">${label}</div>
-          <div class="value">${value}</div>
-          ${trend ? `<div class="trend ${trendClass}">${trend}</div>` : ''}
-        </div>
+    function card(label, value, note = '', noteClass = '') {
+      return `<div class="card"><div class="label">${label}</div><div class="value">${value}</div>${note ? `<div class="subvalue ${noteClass}">${note}</div>` : ''}</div>`;
+    }
+
+    function renderList(el, items, mapper, empty) {
+      if (!items.length) { el.innerHTML = `<div class="empty">${empty}</div>`; return; }
+      el.innerHTML = items.map(mapper).join('');
+    }
+
+    function renderTable(el, rows, headers, mapper, empty) {
+      if (!rows.length) { el.innerHTML = `<div class="empty">${empty}</div>`; return; }
+      el.innerHTML = `
+        <table class="table">
+          <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${rows.map(r => `<tr>${mapper(r).map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
       `;
     }
 
-    function renderTable(container, rows, headers, mapper) {
-      if (!rows.length) {
-        container.innerHTML = `<div class="empty">Nothing to show right now.</div>`;
-        return;
-      }
-      const header = `<div class="row header">${headers.map(h => `<span>${h}</span>`).join('')}</div>`;
-      const body = rows.map(r => `<div class="row">${mapper(r).map(v => `<span>${v}</span>`).join('')}</div>`).join('');
-      container.innerHTML = header + body;
-    }
-
-    function renderList(container, items, mapper, emptyText) {
-      if (!items.length) {
-        container.innerHTML = `<div class="empty">${emptyText}</div>`;
-        return;
-      }
-      container.innerHTML = items.map(mapper).join('');
-    }
-
-    function drawEquityCurve(points) {
+    function drawChart(points) {
       const canvas = document.getElementById('equityChart');
       const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(107,114,128,0.18)';
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = 'rgba(107,114,128,0.15)';
       ctx.lineWidth = 1;
       for (let i = 1; i < 4; i++) {
-        const y = (height / 4) * i;
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
+        const y = (h / 4) * i;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
       }
       if (!points.length) return;
       const vals = points.map(p => Number(p.ending_equity || p.cash || 0));
-      const min = Math.min(...vals);
-      const max = Math.max(...vals);
-      const range = Math.max(max - min, 1);
+      const min = Math.min(...vals), max = Math.max(...vals), range = Math.max(max - min, 1);
       ctx.beginPath();
       ctx.lineWidth = 4;
       ctx.strokeStyle = '#007aff';
       vals.forEach((v, i) => {
-        const x = (width - 40) * (vals.length === 1 ? 0.5 : i / (vals.length - 1)) + 20;
-        const y = height - 24 - ((v - min) / range) * (height - 48);
+        const x = 20 + ((w - 40) * (vals.length === 1 ? 0.5 : i / (vals.length - 1)));
+        const y = h - 20 - ((v - min) / range) * (h - 40);
         if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       });
       ctx.stroke();
@@ -225,69 +188,49 @@
     fetch('./dashboard-data.json')
       .then(r => r.json())
       .then(data => {
-        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • Cash ${fmtMoney(data.summary.cash)} • ${data.summary.signals_now} signals observed`;
+        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.signals_now} signals • ${data.summary.open_positions} open positions`;
 
         document.getElementById('summary').innerHTML = [
-          summaryCard('Cash', fmtMoney(data.summary.cash)),
-          summaryCard('Ending Equity', fmtMoney(data.summary.ending_equity)),
-          summaryCard('Daily Realized PnL', fmtMoney(data.summary.realized_pnl), fmtPct(data.summary.total_return), clsFor(data.summary.total_return)),
-          summaryCard('Win Rate', fmtPct(data.summary.win_rate), `${data.summary.open_positions} open • ${data.summary.closed_positions} closed`),
+          card('Cash', money(data.summary.cash)),
+          card('Equity', money(data.summary.ending_equity)),
+          card('Today PnL', money(data.summary.realized_pnl), pct(data.summary.total_return), cls(data.summary.total_return)),
+          card('Win Rate', pct(data.summary.win_rate), `${data.summary.closed_positions} closed trades`),
         ].join('');
 
         renderList(
           document.getElementById('signals'),
-          data.signals || [],
-          (s) => `
-            <div class="item">
-              <div class="item-title">${s.title}<span class="pill">${s.side}</span></div>
-              <div class="item-meta">Wallets ${s.wallet_count} • Buyers ${s.buying_wallets} • Sellers ${s.selling_wallets} • Score ${s.avg_wallet_score} • Momentum ${s.momentum_score} • Price ${s.price}</div>
-            </div>
-          `,
-          'No candidate signals right now.'
+          (data.signals || []).slice(0, 6),
+          s => `<div class="item"><div class="item-title">${s.title}<span class="pill">${s.side}</span></div><div class="item-meta">Wallets ${s.wallet_count} • Buyers ${s.buying_wallets} • Score ${s.avg_wallet_score} • Price ${s.price}</div></div>`,
+          'No strong signals right now.'
         );
 
         renderList(
           document.getElementById('activity'),
-          data.recent_activity || [],
-          (a) => `
-            <div class="item">
-              <div class="item-title">${a.type || 'event'}${a.title ? ` • ${a.title}` : ''}</div>
-              <div class="item-meta">${a.timestamp || ''}${a.reason ? ` • ${a.reason}` : ''}${a.realized_pnl !== undefined && a.realized_pnl !== null ? ` • PnL ${fmtMoney(a.realized_pnl)}` : ''}</div>
-            </div>
-          `,
-          'No recent activity yet.'
+          (data.recent_activity || []).slice(0, 8),
+          a => `<div class="item"><div class="item-title">${a.type}${a.title ? ` • ${a.title}` : ''}</div><div class="item-meta">${a.reason || a.timestamp || ''}${a.realized_pnl !== undefined && a.realized_pnl !== null ? ` • ${money(a.realized_pnl)}` : ''}</div></div>`,
+          'No recent activity.'
         );
 
         renderTable(
           document.getElementById('openPositions'),
           data.open_positions || [],
-          ['Market', 'Side', 'Entry', 'PnL', 'Return'],
-          (p) => [
-            p.title,
-            p.side,
-            fmtMoney(p.entry_usd),
-            `<span class="${clsFor(p.unrealized_pnl)}">${fmtMoney(p.unrealized_pnl)}</span>`,
-            `<span class="${clsFor(p.return_pct)}">${fmtPct(p.return_pct)}</span>`
-          ]
+          ['Market', 'Side', 'PnL'],
+          p => [p.title, p.side, `<span class="${cls(p.unrealized_pnl)}">${money(p.unrealized_pnl)}</span>`],
+          'No open positions.'
         );
 
         renderTable(
           document.getElementById('closedPositions'),
-          data.closed_positions || [],
-          ['Market', 'Side', 'Reason', 'PnL', 'Exit'],
-          (p) => [
-            p.title,
-            p.side,
-            p.exit_reason || '-',
-            `<span class="${clsFor(p.realized_pnl)}">${fmtMoney(p.realized_pnl)}</span>`,
-            p.exit_price ?? '-'
-          ]
+          (data.closed_positions || []).slice(0, 8),
+          ['Market', 'Reason', 'PnL'],
+          p => [p.title, p.exit_reason || '-', `<span class="${cls(p.realized_pnl)}">${money(p.realized_pnl)}</span>`],
+          'No closed trades yet.'
         );
 
-        drawEquityCurve(data.equity_curve || []);
+        drawChart(data.equity_curve || []);
       })
       .catch(err => {
-        document.getElementById('subtitle').textContent = `Dashboard data failed to load: ${err}`;
+        document.getElementById('subtitle').textContent = `Failed to load dashboard data: ${err}`;
       });
   </script>
 </body>
