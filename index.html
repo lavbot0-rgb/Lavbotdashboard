@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Lavbot Bullpen Dashboard</title>
   <style>
     :root {
       --bg: #f2f2f7;
-      --card: rgba(255,255,255,0.92);
+      --card: rgba(255,255,255,0.94);
       --text: #111827;
       --muted: #6b7280;
       --line: rgba(17,24,39,0.08);
-      --shadow: 0 10px 28px rgba(15,23,42,0.07);
+      --shadow: 0 10px 24px rgba(15,23,42,0.07);
       --accent: #007aff;
       --green: #16a34a;
       --red: #dc2626;
@@ -20,11 +20,11 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #1c1c1e;
-        --card: rgba(44,44,46,0.94);
+        --card: rgba(44,44,46,0.96);
         --text: #f5f5f7;
         --muted: #a1a1aa;
         --line: rgba(255,255,255,0.08);
-        --shadow: 0 10px 30px rgba(0,0,0,0.22);
+        --shadow: 0 10px 28px rgba(0,0,0,0.24);
       }
     }
     * { box-sizing: border-box; }
@@ -34,49 +34,49 @@
       background: var(--bg);
       color: var(--text);
     }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    .header { margin-bottom: 28px; }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+    }
+    .header { margin-bottom: 24px; }
     .title { margin: 0 0 6px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
-    .subtitle { font-size: 15px; color: var(--muted); }
-    .section { margin-top: 28px; }
-    .section h2 { margin: 0 0 14px; font-size: 19px; font-weight: 600; }
-    .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .subtitle { font-size: 15px; line-height: 1.45; color: var(--muted); }
+    .section { margin-top: 24px; }
+    .section h2 { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stack { display: grid; gap: 12px; }
     .card {
       background: var(--card);
       border-radius: 22px;
       padding: 18px;
       box-shadow: var(--shadow);
-      transition: transform 240ms ease-in-out;
+      border: 0;
+      transition: transform 220ms ease-in-out;
     }
     .card:hover { transform: translateY(-1px); }
     .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-    .value { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+    .value { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; }
     .subvalue { margin-top: 8px; font-size: 13px; color: var(--muted); }
     .good { color: var(--green); }
     .bad { color: var(--red); }
     .warn { color: var(--orange); }
-    canvas { width: 100%; height: 240px; display: block; }
-    .list { display: grid; gap: 10px; }
+    canvas { width: 100%; height: 220px; display: block; }
+    .list { display: grid; gap: 8px; }
     .item { padding: 12px 0; border-bottom: 1px solid var(--line); }
     .item:last-child { border-bottom: none; }
-    .item-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .item-meta { font-size: 13px; color: var(--muted); }
-    .table { width: 100%; border-collapse: collapse; }
-    .table th {
-      text-align: left;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 500;
-      padding: 0 0 10px;
-    }
-    .table td {
-      font-size: 14px;
+    .item-title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-bottom: 4px; }
+    .item-meta { font-size: 13px; line-height: 1.45; color: var(--muted); }
+    .table-wrap { display: grid; gap: 10px; }
+    .table-row {
+      display: grid;
+      gap: 4px;
       padding: 12px 0;
-      border-top: 1px solid var(--line);
-      vertical-align: top;
+      border-bottom: 1px solid var(--line);
     }
-    .empty { font-size: 14px; color: var(--muted); padding: 6px 0; }
+    .table-row:last-child { border-bottom: none; }
+    .table-title { font-size: 15px; font-weight: 600; line-height: 1.35; }
+    .table-meta { font-size: 13px; line-height: 1.45; color: var(--muted); }
     .pill {
       display: inline-block;
       padding: 4px 8px;
@@ -85,15 +85,14 @@
       color: var(--accent);
       font-size: 12px;
       margin-left: 8px;
+      vertical-align: middle;
     }
-    @media (max-width: 900px) {
-      .summary-grid, .grid-2 { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 640px) {
-      .wrap { padding: 20px; }
-      .summary-grid, .grid-2 { grid-template-columns: 1fr; }
-      .title { font-size: 28px; }
-      .value { font-size: 26px; }
+    .empty { font-size: 14px; color: var(--muted); padding: 6px 0; }
+    @media (min-width: 768px) {
+      .wrap { max-width: 1100px; padding: 24px; }
+      .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+      .stack-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .desktop-only { display: block; }
     }
   </style>
 </head>
@@ -109,11 +108,11 @@
     <section class="section">
       <div class="card">
         <h2>Equity</h2>
-        <canvas id="equityChart" width="1200" height="280"></canvas>
+        <canvas id="equityChart" width="1200" height="260"></canvas>
       </div>
     </section>
 
-    <section class="section grid-2">
+    <section class="section stack-2 stack">
       <div class="card">
         <h2>Top Signals</h2>
         <div class="list" id="signals"></div>
@@ -124,14 +123,14 @@
       </div>
     </section>
 
-    <section class="section grid-2">
+    <section class="section stack-2 stack">
       <div class="card">
         <h2>Open Positions</h2>
-        <div id="openPositions"></div>
+        <div class="table-wrap" id="openPositions"></div>
       </div>
       <div class="card">
         <h2>Recent Closed Trades</h2>
-        <div id="closedPositions"></div>
+        <div class="table-wrap" id="closedPositions"></div>
       </div>
     </section>
   </div>
@@ -150,14 +149,9 @@
       el.innerHTML = items.map(mapper).join('');
     }
 
-    function renderTable(el, rows, headers, mapper, empty) {
+    function renderRows(el, rows, mapper, empty) {
       if (!rows.length) { el.innerHTML = `<div class="empty">${empty}</div>`; return; }
-      el.innerHTML = `
-        <table class="table">
-          <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-          <tbody>${rows.map(r => `<tr>${mapper(r).map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
-        </table>
-      `;
+      el.innerHTML = rows.map(mapper).join('');
     }
 
     function drawChart(points) {
@@ -188,7 +182,7 @@
     fetch('./dashboard-data.json')
       .then(r => r.json())
       .then(data => {
-        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.signals_now} signals • ${data.summary.open_positions} open positions`;
+        document.getElementById('subtitle').textContent = `Updated ${data.updated_at || 'unknown'} • ${data.summary.signals_now} signals • ${data.summary.open_positions} open`;
 
         document.getElementById('summary').innerHTML = [
           card('Cash', money(data.summary.cash)),
@@ -199,31 +193,29 @@
 
         renderList(
           document.getElementById('signals'),
-          (data.signals || []).slice(0, 6),
-          s => `<div class="item"><div class="item-title">${s.title}<span class="pill">${s.side}</span></div><div class="item-meta">Wallets ${s.wallet_count} • Buyers ${s.buying_wallets} • Score ${s.avg_wallet_score} • Price ${s.price}</div></div>`,
+          (data.signals || []).slice(0, 5),
+          s => `<div class="item"><div class="item-title">${s.title}<span class="pill">${s.side}</span></div><div class="item-meta">${s.wallet_count} wallets • ${s.buying_wallets} buyers • score ${s.avg_wallet_score} • price ${s.price}</div></div>`,
           'No strong signals right now.'
         );
 
         renderList(
           document.getElementById('activity'),
-          (data.recent_activity || []).slice(0, 8),
-          a => `<div class="item"><div class="item-title">${a.type}${a.title ? ` • ${a.title}` : ''}</div><div class="item-meta">${a.reason || a.timestamp || ''}${a.realized_pnl !== undefined && a.realized_pnl !== null ? ` • ${money(a.realized_pnl)}` : ''}</div></div>`,
+          (data.recent_activity || []).slice(0, 6),
+          a => `<div class="item"><div class="item-title">${a.type}${a.title ? ` • ${a.title}` : ''}</div><div class="item-meta">${a.reason || ''}${a.realized_pnl !== undefined && a.realized_pnl !== null ? ` • ${money(a.realized_pnl)}` : ''}</div></div>`,
           'No recent activity.'
         );
 
-        renderTable(
+        renderRows(
           document.getElementById('openPositions'),
           data.open_positions || [],
-          ['Market', 'Side', 'PnL'],
-          p => [p.title, p.side, `<span class="${cls(p.unrealized_pnl)}">${money(p.unrealized_pnl)}</span>`],
+          p => `<div class="table-row"><div class="table-title">${p.title} <span class="pill">${p.side}</span></div><div class="table-meta">Entry ${money(p.entry_usd)} • PnL <span class="${cls(p.unrealized_pnl)}">${money(p.unrealized_pnl)}</span></div></div>`,
           'No open positions.'
         );
 
-        renderTable(
+        renderRows(
           document.getElementById('closedPositions'),
-          (data.closed_positions || []).slice(0, 8),
-          ['Market', 'Reason', 'PnL'],
-          p => [p.title, p.exit_reason || '-', `<span class="${cls(p.realized_pnl)}">${money(p.realized_pnl)}</span>`],
+          (data.closed_positions || []).slice(0, 6),
+          p => `<div class="table-row"><div class="table-title">${p.title}</div><div class="table-meta">${p.exit_reason || '-'} • <span class="${cls(p.realized_pnl)}">${money(p.realized_pnl)}</span></div></div>`,
           'No closed trades yet.'
         );
 
